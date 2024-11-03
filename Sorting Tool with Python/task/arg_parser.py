@@ -2,7 +2,6 @@ import argparse
 
 
 class ArgParser(argparse.ArgumentParser):
-    unrecognized_args = set()
     def __init__(self):
         super().__init__()
         self.add_argument("-dataType",
@@ -11,6 +10,8 @@ class ArgParser(argparse.ArgumentParser):
         self.add_argument("-sortingType",
                           choices=["natural", "byCount"],
                           default="natural")
+        self.add_argument("-inputFile", required=False,)
+        self.add_argument("-outputFile", required=False,)
 
     def error(self, message):
         first, second = message.split(":", maxsplit=1)

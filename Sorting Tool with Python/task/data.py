@@ -1,7 +1,6 @@
 import math
 from enum import Enum
-from typing import List, TypeVar, Callable, Generic, Set, Optional
-from venv import logger
+from typing import List, TypeVar
 
 from sorting_type import SortingType
 
@@ -37,7 +36,7 @@ class DataType(Enum):
 T = TypeVar("T")
 
 
-class DataWrapper(Generic[T]):
+class DataWrapper:
     def __init__(self, data: list[str], data_type: DataType, sorting_type: SortingType):
         self.data_type: DataType = data_type
         self.data: List[T] = data_type.value["prep"](data)
@@ -46,12 +45,12 @@ class DataWrapper(Generic[T]):
         # pre-order in natural order
         self.data.sort()
 
-    def print(self):
-        print(f"Total {self.data_type.value['print_name']}: {len(self.data)}")
+    def get_sorted(self) -> str:
+        total = f"Total {self.data_type.value['print_name']}: {len(self.data)}"
         match self.sorting_type:
             case SortingType.NATURAL:
                 print_ready : str = self.join_char.join(map(str, self.data))
-                print(f"Sorted data:{self.join_char}{print_ready}")
+                return f"{total}\nSorted data:{self.join_char}{print_ready}"
             case SortingType.BY_COUNT:
                 sorted_by_count = sorted(self.data, key=lambda x: SortingType.count(x, self.data))
                 unique_by_count = list(dict.fromkeys(sorted_by_count))
@@ -60,4 +59,5 @@ class DataWrapper(Generic[T]):
                      f"{self.data.count(d)} time(s), "
                      f"{math.floor(self.data.count(d) / len(self.data) * 100)}%")
                     for d in unique_by_count]
-                print("\n".join(print_ready))
+                result = '\n'.join(print_ready)
+                return f"{total}\n{result}"
