@@ -9,7 +9,11 @@ from sorting_type import SortingType
 def as_int_list(_lines: List[str]) -> List[int]:
     numbers = []
     for line in _lines:
-        numbers.extend(int(date) for date in line.split())
+        for value in line.split():
+            try:
+                numbers.append(int(value))
+            except ValueError:
+                print(f'"{value}" is not a long. It will be skipped.')
     return numbers
 
 
@@ -57,6 +61,3 @@ class DataWrapper(Generic[T]):
                      f"{math.floor(self.data.count(d) / len(self.data) * 100)}%")
                     for d in unique_by_count]
                 print("\n".join(print_ready))
-
-
-

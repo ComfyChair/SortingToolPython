@@ -10,10 +10,3 @@ class SortingType(Enum):
 
     NATURAL = "natural"
     BY_COUNT = "byCount"
-
-
-
-
-
-
-

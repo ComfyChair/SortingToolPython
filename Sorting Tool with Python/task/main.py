@@ -1,16 +1,10 @@
-import argparse
 from typing import List
 
+from arg_parser import ArgParser
 from data import DataType, DataWrapper
 from sorting_type import SortingType
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-dataType",
-                    choices=["word","line","long"],
-                    default="word")
-parser.add_argument("-sortingType",
-                    choices=["natural","byCount"],
-                    default="natural")
+parser = ArgParser()
 
 
 def get_input() -> List[str]:
@@ -24,8 +18,9 @@ def get_input() -> List[str]:
 
 
 if __name__ == "__main__":
-    data_type = DataType[parser.parse_args().dataType.upper()]
-    sort_type = SortingType(parser.parse_args().sortingType)
+    args = parser.parse_args()
+    data_type = DataType[args.dataType.upper()]
+    sort_type = SortingType(args.sortingType)
     raw_data = get_input()
 
     data_wrapper = DataWrapper(raw_data, data_type, sort_type)
