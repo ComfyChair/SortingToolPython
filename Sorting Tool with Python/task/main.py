@@ -1,7 +1,7 @@
 import argparse
 from typing import List
 
-from data_type import DataType
+from data import DataType, DataWrapper
 from sorting_type import SortingType
 
 parser = argparse.ArgumentParser()
@@ -25,8 +25,8 @@ def get_input() -> List[str]:
 
 if __name__ == "__main__":
     data_type = DataType[parser.parse_args().dataType.upper()]
-    sort_type = SortingType[parser.parse_args().sortingType.upper()]
+    sort_type = SortingType(parser.parse_args().sortingType)
     raw_data = get_input()
 
-    sort_type.value["fct"](raw_data, data_type)
-
+    data_wrapper = DataWrapper(raw_data, data_type, sort_type)
+    data_wrapper.print()
